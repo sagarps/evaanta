@@ -10,6 +10,8 @@
 
       <!-- Alpine.js - Load first -->
       <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"></script>
+      <!-- 👇 reCAPTCHA script -->
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
       
       <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
@@ -1389,7 +1391,7 @@ body, div, p {
         <!-- Contact Form -->
         <div class="bg-neutral-50 p-8 rounded-lg border border-neutral-100 shadow-sm">
           <h3 class="text-2xl font-bold text-neutral-800 mb-6">Get in Touch</h3>
-          <form id="contact-form" class="space-y-6" style="display: none;">
+          <form id="contact-form" method="POST" action="http://127.0.0.1:3000/enquiry" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label for="name" class="block text-sm font-medium text-neutral-700 mb-1">Full Name *</label>
@@ -1478,7 +1480,7 @@ body, div, p {
                 I agree to the <a href="#" class="text-[#0A2463] underline">privacy policy</a> and consent to being contacted about my inquiry.
               </label>
             </div>
-            
+            <div class="g-recaptcha" data-sitekey="6LfS9T8rAAAAAIsuSPx87fvvl90dbmJ3D1MClK9N"></div>
             <div>
               <button 
                 type="submit" 
@@ -1655,6 +1657,25 @@ body, div, p {
             submitButton.disabled = true;
             submitButton.innerHTML = '<span>Sending...</span>';
             
+            // ssss
+            // For demo purposes, simulate a network request
+            // Alternative: Use XMLHttpRequest for AJAX form submission
+            setTimeout(() => {
+              lastFocusedElement = document.activeElement;
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', contactForm.action, true);
+              xhr.setRequestHeader('Content-Type', 'application/json');
+              xhr.send(JSON.stringify({
+              name: contactForm.name.value,
+              email: contactForm.email.value,
+              company: contactForm.company.value,
+              phone: contactForm.phone.value,
+              service: contactForm.service.value,
+              message: contactForm.message.value
+              }));
+              // No need to handle response for demo
+            });
+            // eeeee
             // For demo purposes, simulate a network request
             setTimeout(() => {
               // Store last focused element (the submit button)
